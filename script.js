@@ -80,7 +80,7 @@ function letraSeleccionada(){
 function inputLetra(l){
     //Si la letra ya fue utilizada muestra una alerta.
     if(letrasUsadas.includes(l))
-        alert("Esa letras ya la has usado");
+        alert("Esa letra ya la has usado");
     //En otro caso varifica si la letra ingresada es correcta.
     else{
         // if(letras.includes(l))
