@@ -8,12 +8,14 @@ let puntaje = 0;
 
 /*Función auxiliar que busca si la palabra incluye una letra, mayúscula o minúscula*/
 function incluyeLetra(l){
-    let b = false;
-    letras.forEach(letra => {
-        if(letra == l || letra == l.toUpperCase())
-            b = true;
-    });
-    return b;
+    let n = 0;
+    while(n < letras.length){
+        if(letras[n] == l || letras[n] == l.toUpperCase())
+            return true;
+
+        n++;
+    }
+    return false;
 }
 
 /*
@@ -43,18 +45,14 @@ function nuevaPalabra(palabra){
     let contenedor = document.getElementsByClassName("word-container");
     //Por cada letra en el arreglo creamos una casilla.
     letras.forEach(l => {
+        let casilla = document.createElement("div");
         //Si hay un espacio creamos un div con la clase "space".
-        if(l === " "){
-            let espacio = document.createElement("div");
-            espacio.setAttribute("class", "word space");
-            contenedor[0].appendChild(espacio);
-        }
-        //En otro caso creamos el div con la clase "letter"
-        else{
-            let letra = document.createElement("div");
-            letra.setAttribute("class", "word letter");
-            contenedor[0].appendChild(letra);
-        }
+        if(l === " ")
+            casilla.setAttribute("class", "word space");
+        //En otro caso creamos el div con la clase "letter".
+        else
+            casilla.setAttribute("class", "word letter");
+        contenedor[0].appendChild(casilla);
     });
 }
 
@@ -67,10 +65,13 @@ function letraSeleccionada(){
     input.addEventListener("input", (e) => {
         let l = e.data;
         //Verificamos que el usuario ingresara una letra.
-        if(l.match(lettersInput))
+        if(l.match(lettersInput)){
             inputLetra(l);
+            input.disabled = true;
+        }
         //Fijamos un timer, para limpiar el input después de 300 milisengundos.
         setTimeout(() => {input.value="";},300);
+        input.disabled = false;
     });
 }
 
@@ -149,7 +150,10 @@ function letraIncorrecta(){
  * Función para cuando ganamos el juego.
  */
 function ganar(){
-    cambiaPuntaje(true);
+    // Incrementamos el puntaje en 1.
+    let score = document.getElementById("score-container");
+    puntaje++;
+    score.innerHTML = "Puntaje: " + puntaje;
     //Creamos un nuevo elemento <h1>
     let fin = document.createElement("h1")
     fin.id = "title";
@@ -166,15 +170,11 @@ function ganar(){
 /*
  * Función para cuando perdemos el juego.
  */
-
 function perder(){
-    cambiaPuntaje(false);
     //Creamos un nuevo elemento <h1>
-    let fin = document.createElement("h1")
+    let fin = document.createElement("h1");
     fin.id = "title";
     fin.innerHTML = "Perdiste :("
-
-
     let casillas = document.getElementsByClassName("word");
     for(let k = 0; k < letras.length; k++){
         if(casillas[k].innerHTML == ""){
@@ -184,28 +184,11 @@ function perder(){
             casilla.appendChild(texto);
         }
     }
-
-    console.log("You're here");
-
     //Sustituimos el elemento existente.
     let body = document.getElementsByTagName("body");
     let titulo = document.getElementById("title");
     body[0].replaceChild(fin, titulo);
-
     crearBoton();
-}
-
-/*
- * Función auxiliar que modifica el puntaje
-*/
-function cambiaPuntaje(b){
-    let score = document.getElementById("score-container");
-    if(b)
-        puntaje++;
-    else
-        puntaje--;
-
-    score.innerHTML = "Puntaje: " + puntaje;
 }
 
 /*
