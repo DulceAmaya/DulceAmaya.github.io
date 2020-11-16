@@ -24,6 +24,10 @@ function incluyeLetra(l){
 function comenzar(){
     //Obtenemos un indice aleatorio dentro del tamaño del arreglo.
     const indice = Math.floor(Math.random() * peliculas.length);
+    
+    let input = document.getElementById("letter-input");
+    input.innerHTML = "";
+
     nuevaPalabra(peliculas[indice]);
     letraSeleccionada();
 }
@@ -209,7 +213,9 @@ function crearBoton(){
 }
 
 
-// Me falta volver a sustituir el boton por el input y el h3.
+/*
+ * Función que reinicia el juego.
+ */
 function reinciar(){
     letras = [];
     intentos = 1;
