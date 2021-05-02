@@ -1,4 +1,4 @@
-let peliculas = ["Titanic", "Cenicienta", "Pulp Fiction", "Avatar", "Joker", "Toy Story", "Avengers", "Cars", "Batman Inicia", "Baby Driver", "Shrek", "Lalaland", "Monsters Inc", "El Padrino", "Sharknado", "Mulan", "Megamente", "Iron Man", "El transportador", "Enredados", "La Familia Adams", "Interestelar", "Venom", "Jumanji"];
+let peliculas = ["Titanic", "Cenicienta", "Pulp Fiction", "Avatar", "Joker", "Toy Story", "Avengers", "Cars", "Batman Inicia", "Baby Driver", "Shrek", "Lalaland", "Monsters Inc", "El Padrino", "Sharknado", "Mulan", "Megamente", "Iron Man", "El transportador", "Enredados", "La Familia Adams", "Interestelar", "Venom", "Jumanji", "Ratatouille", "El Origen", "Gladiador", "Frozen", "No Respires"];
 
 let letras = [];
 let intentos = 1;
@@ -6,27 +6,16 @@ let letrasUsadas = [];
 let letrasFaltantes = 0;
 let puntaje = 0;
 
-/*Función auxiliar que busca si la palabra incluye una letra, mayúscula o minúscula*/
-function incluyeLetra(l){
-    let n = 0;
-    while(n < letras.length){
-        if(letras[n] == l || letras[n] == l.toUpperCase())
-            return true;
-
-        n++;
-    }
-    return false;
-}
-
 /*
  * Función que comienza el juego. Selecciona aleatoriamente una palabra del arreglo de palabras existente.
  */
 function comenzar(){
     //Obtenemos un indice aleatorio dentro del tamaño del arreglo.
     const indice = Math.floor(Math.random() * peliculas.length);
-    
+
+    //Limpiamos la entrada.
     let input = document.getElementById("letter-input");
-    input.innerHTML = "";
+    input.value = "";
 
     nuevaPalabra(peliculas[indice]);
     letraSeleccionada();
@@ -88,17 +77,24 @@ function inputLetra(l){
         alert("Esa letra ya la has usado");
     //En otro caso varifica si la letra ingresada es correcta.
     else{
-        // if(letras.includes(l))
         if(incluyeLetra(l))
             letraCorrecta(l);
-        //Verificamos si la letra no es una mayúscula
-        // Aquí hay un error, tengo que checar ambos caoso por si la letra aparece más de una vez y una de esas veces es una mayuscula. No solo una situación O la otra.
-        // else if(letras.includes(l.toUpperCase()))
-        //     letraCorrecta(l.toUpperCase());
         else
             letraIncorrecta();
         letrasUsadas.push(l);
     }
+}
+
+/*Función auxiliar que busca si la palabra incluye una letra, mayúscula o minúscula*/
+function incluyeLetra(l){
+    let n = 0;
+    while(n < letras.length){
+        if(letras[n] == l || letras[n] == l.toUpperCase())
+            return true;
+
+        n++;
+    }
+    return false;
 }
 
 /*
